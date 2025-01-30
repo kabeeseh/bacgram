@@ -6,6 +6,8 @@ export async function POST(req: Request) {
 
     if (!username || !password || isEmpty([username, password]))
       return new Response("Bad Body", { status: 400 });
+
+    return new Response("jih");
   } catch (error: any) {
     return new Response(error, { status: 500 });
   }
