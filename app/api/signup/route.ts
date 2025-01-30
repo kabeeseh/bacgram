@@ -8,7 +8,7 @@ export async function POST(req: Request) {
       return new Response("Bad Body", { status: 400 });
 
     return new Response("jih");
-  } catch (error: any) {
-    return new Response(error, { status: 500 });
+  } catch (error) {
+    return new Response(error as any, { status: 500 });
   }
 }
