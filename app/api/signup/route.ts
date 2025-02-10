@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       },
     });
 
-    if (file) {
+    if (file != null) {
       const handleUpload = async () => {
         const { error } = await supabase.storage
           .from("image")
