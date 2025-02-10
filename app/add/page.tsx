@@ -36,8 +36,8 @@ export default function Add() {
               .then(() => {
                 alert("Post Added");
               })
-              .catch(() => {
-                alert("Error");
+              .catch((err: any) => {
+                alert(err.response.data);
               })
               .finally(() => {
                 setLoading(false);
