@@ -26,7 +26,6 @@ export default function Add() {
             formData.append("title", title.current!.value);
             formData.append("content", content.current!.value);
             formData.append("file", userImage.current!.files![0]);
-            console.log(userImage.current!.files![0].name);
 
             await axios
               .post("/api/posts", formData, {

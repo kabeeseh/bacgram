@@ -9,6 +9,7 @@ import { setCookie } from "cookies-next";
 export default function Signup() {
   const username = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
+  const avatar = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -22,11 +23,12 @@ export default function Signup() {
         e.preventDefault();
         setLoading(true);
         setError("");
+        const formData = new FormData();
+        formData.append("username", username.current?.value as string);
+        formData.append("password", password.current?.value as string);
+        formData.append("file", avatar.current?.files?.[0] as any);
         await axios
-          .post("/api/signup", {
-            username: username.current?.value,
-            password: password.current?.value,
-          })
+          .post("/api/signup", formData)
           .then((res) => {
             setCookie("token", res.data);
             router.push("/home");
@@ -74,6 +76,14 @@ export default function Signup() {
           ref={password}
         />
       </label>
+      <input
+        type="file"
+        className="input input-bordered text-center "
+        accept="image/*"
+        placeholder="Avatar"
+        ref={avatar}
+      />
+
       <button className="btn btn-primary">SignUp</button>
     </form>
   );
