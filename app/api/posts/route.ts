@@ -64,7 +64,7 @@ export async function POST(req: Request) {
 
     const file = formData.get("file");
 
-    if (file != null && file instanceof File) {
+    if (file != null) {
       const handleUpload = async () => {
         const { error } = await supabase.storage
           .from("image")
