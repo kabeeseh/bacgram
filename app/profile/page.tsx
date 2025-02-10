@@ -6,14 +6,12 @@ import Loading from "../loadingComp";
 import Error from "../Error";
 import axios from "axios";
 import { getCookie } from "cookies-next";
-import Image from "next/image";
 import Nav from "../nav";
 
 export default function Profile() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [_, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const fetchPosts = async () => {
     await axios
@@ -31,7 +29,6 @@ export default function Profile() {
         setError(err.response.data);
         console.log(err);
         setLoading(false);
-        setHasMore(false);
       });
   };
 

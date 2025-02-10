@@ -66,7 +66,7 @@ export async function POST(req: Request) {
 
     if (file) {
       const handleUpload = async () => {
-        const { data, error } = await supabase.storage
+        const { error } = await supabase.storage
           .from("image")
           .upload(`${post.id}`, file, {
             cacheControl: "3600",
