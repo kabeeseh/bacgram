@@ -82,6 +82,7 @@ export default function Signup() {
         accept="image/*"
         placeholder="Avatar"
         ref={avatar}
+        required
       />
 
       <button className="btn btn-primary">SignUp</button>
