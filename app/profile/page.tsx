@@ -7,6 +7,8 @@ import Error from "../Error";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import Nav from "../nav";
+import { Modal } from "../Modal";
+import PostComp from "../Post";
 
 export default function Profile() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -47,30 +49,7 @@ export default function Profile() {
         className="flex items-center flex-col mt-[30vh] gap-[3vh]"
       >
         {posts.map((post: any) => (
-          <div
-            className="card bg-base-100 w-96 shadow-2xl"
-            key={post.id as string}
-          >
-            {post.imageLink && post.imageLink != "" ? (
-              <figure>
-                <img src={post.imageLink as string} alt="Post Image" />
-              </figure>
-            ) : null}
-            <div className="card-body">
-              <div className="flex items-center gap-[2vw]">
-                <div className="avatar">
-                  <div className="w-10 rounded-full">
-                    <img src={post.author.avatarLink} />
-                  </div>
-                </div>
-                <h1 className="font-semibold">
-                  Username: {post.author.username}
-                </h1>
-              </div>
-              <h2 className="card-title">Title: {post.title}</h2>
-              <p className="capitalize">{post.content}</p>
-            </div>
-          </div>
+          <PostComp post={post} key={post.id} />
         ))}
       </InfiniteScroll>
     </>
