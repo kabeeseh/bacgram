@@ -10,7 +10,7 @@ export async function DELETE(
     if (!authHeader || !verify(authHeader, "secret"))
       return new Response("Unauthorized", { status: 401 });
 
-    const { id } = context.params;
+    const { id } = params;
 
     const post = await prisma.post.findUnique({
       where: {
