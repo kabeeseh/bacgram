@@ -56,9 +56,21 @@ export async function POST(req: Request) {
       await handleUpload();
     }
 
+    const user2 = await prisma.user.findUnique({
+      where: {
+        id: user.id,
+      },
+    });
+
     const token = await sign({ username, id: user.id }, "secret");
 
-    return Response.json(token);
+    return Response.json({
+      token,
+      user: {
+        username: user2!.username,
+        avatarLink: user2!.avatarLink,
+      },
+    });
   } catch (error: any) {
     return new Response(error, { status: 500 });
   }

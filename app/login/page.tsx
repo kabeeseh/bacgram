@@ -1,10 +1,11 @@
 "use client";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import Loading from "../loadingComp";
 import Error from "../Error";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
+import { AuthContext } from "../AuthContext";
 
 export default function Login() {
   const username = useRef<HTMLInputElement>(null);
@@ -12,6 +13,8 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const userContext = useContext(AuthContext);
+  const { setUser }: any = userContext;
   const router = useRouter();
   return loading ? (
     <Loading />
@@ -28,8 +31,9 @@ export default function Login() {
             password: password.current?.value,
           })
           .then((res) => {
-            setCookie("token", res.data);
+            setCookie("token", res.data.token);
             router.push("/home");
+            setUser(res.data.user);
           })
           .catch((err) => {
             setError(err.response.data);

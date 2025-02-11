@@ -1,10 +1,11 @@
 "use client";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import Loading from "../loadingComp";
 import Error from "../Error";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
+import { AuthContext } from "../AuthContext";
 
 export default function Signup() {
   const username = useRef<HTMLInputElement>(null);
@@ -14,6 +15,8 @@ export default function Signup() {
   const [error, setError] = useState("");
 
   const router = useRouter();
+  const userContext = useContext(AuthContext);
+  const { setUser }: any = userContext;
   return loading ? (
     <Loading />
   ) : (
@@ -30,8 +33,9 @@ export default function Signup() {
         await axios
           .post("/api/signup", formData)
           .then((res) => {
-            setCookie("token", res.data);
+            setCookie("token", res.data.token);
             router.push("/home");
+            setUser(res.data.user);
           })
           .catch((err) => {
             setError(err.response.data);
