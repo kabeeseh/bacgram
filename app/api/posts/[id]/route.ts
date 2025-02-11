@@ -22,9 +22,6 @@ export async function POST(
 
     const decoded: any = await decode(authHeader);
 
-    if (post.authorId != decoded.id)
-      return new Response("Action not allowed", { status: 401 });
-
     await prisma.post.delete({
       where: {
         id,
