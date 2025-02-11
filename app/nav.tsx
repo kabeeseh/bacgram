@@ -1,6 +1,9 @@
+import { deleteCookie } from "cookies-next";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Nav() {
+  const router = useRouter();
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
@@ -18,7 +21,16 @@ export default function Nav() {
             <Link href={"/profile"}>Profile</Link>
           </li>
           <li>
-            <button className="btn btn-ghost">LogOut</button>
+            <button
+              className="btn btn-ghost"
+              onClick={(e) => {
+                e.preventDefault();
+                deleteCookie("token");
+                router.push("/");
+              }}
+            >
+              LogOut
+            </button>
           </li>
         </ul>
       </div>
