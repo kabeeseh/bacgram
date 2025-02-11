@@ -3,7 +3,7 @@ import { prisma } from "../../init";
 
 export async function DELETE(
   req: Request,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
     const authHeader = req.headers.get("Authorization")?.split(" ")[1];
