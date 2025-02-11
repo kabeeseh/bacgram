@@ -3,14 +3,14 @@ import { prisma } from "../../init";
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { context }: { context: { params: { id: string } } }
 ) {
   try {
     const authHeader = req.headers.get("Authorization")?.split(" ")[1];
     if (!authHeader || !verify(authHeader, "secret"))
       return new Response("Unauthorized", { status: 401 });
 
-    const { id } = params;
+    const { id } = context.params;
 
     const post = await prisma.post.findUnique({
       where: {
