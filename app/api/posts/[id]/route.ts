@@ -1,7 +1,7 @@
 import { decode, verify } from "jsonwebtoken";
 import { prisma } from "../../init";
 
-export async function DELETE(
+export async function POST(
   req: Request,
   { params }: { params: { id: string } }
 ) {

@@ -40,7 +40,7 @@ export default function PostComp({ post }: { post: any }) {
               className="btn btn-error"
               onClick={() => {
                 axios
-                  .delete(`/api/posts/${post.id}`, {
+                  .post(`/api/posts/${post.id}`, {
                     headers: {
                       Authorization: `Bearer ${getCookie("token")}`,
                     },
