@@ -1,42 +1,30 @@
-import { compare } from "bcrypt";
-import { prisma } from "../init";
-import { isEmpty } from "../isEmpty";
-import { sign } from "jsonwebtoken";
+import { compare } from "bcrypt"
+import { isEmpty } from "../isEmpty"
+import { prisma } from "../prisma"
+import { sign } from "jsonwebtoken"
 
 export async function POST(req: Request) {
-  try {
-    const { username, password } = await req.json();
+    try {
+        const { username, password } = await req.json()
 
-    if (!username || !password || isEmpty([username, password]))
-      return new Response("Bad Body", { status: 400 });
+        if (!username || !password || isEmpty([username, password])) return new Response("Bad Body", { status: 400 })
 
-    const user = await prisma.user.findFirst({
-      where: {
-        username,
-      },
-    });
+        const user = await prisma.user.findFirst({
+            where: {
+                username
+            }
+        })
 
-    if (!user) return new Response("Username Not Found", { status: 400 });
-    const passMatches = await compare(password, user?.password as string);
+        if (!user) return new Response("No User Found", { status: 404 })
 
-    if (!passMatches)
-      return new Response("Incorrect Password", { status: 400 });
+        const passMatches = await compare(password, user.password)
 
-    const token = await sign({ username, id: user?.id }, "secret");
+        if (!passMatches) return new Response("Password Incorrect", { status: 404 })
 
-    const user2 = await prisma.user.findUnique({
-      where: {
-        id: user.id,
-      },
-    });
-    return Response.json({
-      token,
-      user: {
-        username: user2?.username,
-        avatarLink: user2?.avatarLink,
-      },
-    });
-  } catch (error: any) {
-    return new Response(error, { status: 500 });
-  }
+        const token = await sign({ id: user.id, username }, process.env.SECRET as string)
+
+        return Response.json({ token })
+    }catch (error: any) {
+        return new Response(error, { status: 500 })
+    }
 }

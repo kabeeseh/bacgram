@@ -1,8 +1,8 @@
 export function isEmpty(arr: string[]) {
-  for (let i = 0; arr.length < i; i++) {
-    if (arr[i] == "") {
-      return true;
+    for (let i = 0;i<arr.length;i++) {
+        if (arr[i] == "") {
+            return true
+        }
     }
-  }
-  return false;
+    return false
 }
