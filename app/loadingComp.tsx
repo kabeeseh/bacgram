@@ -1,3 +1,3 @@
 export function Loading() {
-    return <div className="flex items-center justify-center h-screen"><span className="loading loading-spinner loading-lg"></span></div>
+    return <div className="flex items-center justify-center h-screen"><span className="loading loading-bars loading-lg"></span></div>
 }

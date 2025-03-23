@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
 :root {
   --background: #0a0a0a;
   --foreground: #ededed;
@@ -25,7 +26,22 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   width: 100vw;
   height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
 }
+
+/* Ensure buttons and elements follow dark theme even when margins are applied */
+body, .standardBtn {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
 .standardBtn {
-  @apply btn btn-primary btn-outline px-[3vw] text-[1.2rem];
+  @apply btn btn-primary btn-outline px-[3vw] text-[1.2rem] bg-gray-800 text-white; /* Add dark background and white text */
 }
+
+/* Handle dark mode for the body and elements */
+.dark-body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+

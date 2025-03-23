@@ -17,6 +17,7 @@ model User{
   username String @unique 
   password String
   posts Post[] @relation(name: "posts")
+  profileUrl String
   createdAt DateTime @default(now())
 }
 model Post {
