@@ -12,6 +12,9 @@ export async function GET(req: Request) {
         const posts = await prisma.post.findMany({
             where: {
                 authorId: decoded.id
+            },
+            include: {
+                author: true
             }
         })
 
