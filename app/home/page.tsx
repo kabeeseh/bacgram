@@ -5,6 +5,7 @@ import { getCookie } from "cookies-next"
 import { useEffect, useState } from "react"
 import { Error } from "../Error"
 import { Loading } from "../loadingComp"
+import Nav from "../Nav"
 
 export default function Home() {
     const [posts, setPosts] = useState<any[]>([])
@@ -26,6 +27,7 @@ export default function Home() {
         fetchPosts()
     }, [])
     return <>
+    <Nav />
         {loading ? <Loading /> :
         <div className="flex flex-col items-center pt-[10vh] bg-[#0a0a0a]">
         {error ? <Error error={error} className="text-center text-[2rem] flex items-center justify-center h-screen" /> : null}

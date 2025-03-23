@@ -9,23 +9,22 @@ import { useRouter } from "next/navigation"
 import Nav from "../Nav"
 
 export default function Signup() {
-    const username = useRef<HTMLInputElement>(null)
-    const password = useRef<HTMLInputElement>(null)
-    const file = useRef<HTMLInputElement>(null)
+    const title = useRef<HTMLInputElement>(null)
+    const content = useRef<HTMLInputElement>(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const router = useRouter()
     return <>
+    <Nav />
     {loading ? <Loading /> :  <>
         <form className="flex flex-col items-center justify-center h-screen gap-[2vh]" onSubmit={(e) => {
             e.preventDefault()
             setLoading(true)
             setError("")
-            const formData = new FormData()
-            formData.append("username", username.current?.value as any)
-            formData.append("password", password.current?.value as any)
-            formData.append("file", file.current?.files?.[0] as any)
-            axios.post("/api/signup", formData).then((res) => {
+            axios.post("/api/posts", {
+                title: title.current?.value,
+                content: content.current?.value
+            }).then((res) => {
                 setCookie("token", res.data.token)
                 router.push('/home')
             }).catch((err) => {
@@ -34,11 +33,10 @@ export default function Signup() {
                 
             }).finally(() => setLoading(false))
         }}>
-            <h1 className="text-[2rem] font-bold">SignUp</h1>
+            <h1 className="text-[2rem] font-bold">Create Post</h1>
             {error ? <Error error={error} className="text-[1.5rem]" /> : null}
-            <input type="text" className="input text-black" placeholder="Username" ref={username} />
-            <input type="password" className="input text-black" placeholder="Password" ref={password} />
-            <input type="file" className="input text-black" placeholder="Profile Picture" ref={file} />
+            <input type="text" className="input text-black" placeholder="Title" ref={title} />
+            <input type="content" className="input text-black" placeholder="Content" ref={content} />
             <button className="btn btn-primary btn-outline">SignUp</button>
         </form>
     </>}

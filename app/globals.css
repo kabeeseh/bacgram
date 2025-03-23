@@ -45,3 +45,6 @@ body, .standardBtn {
   color: var(--foreground);
 }
 
+.navBtn {
+  @apply btn btn-ghost text-[1.3rem];
+}
