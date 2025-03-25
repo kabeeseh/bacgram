@@ -32,9 +32,9 @@ export default function LogIn() {
         }}>
             <h1 className="text-[2rem] font-bold">LogIn</h1>
             {error ? <Error error={error} className="text-[1.5rem]" /> : null}
-            <input type="text" className="input text-black" placeholder="Username" ref={username} />
-            <input type="password" className="input text-black" placeholder="Password" ref={password} />
-            <button className="btn btn-primary btn-outline">LogIn</button>
+            <input type="text" className="input bg-transparent" placeholder="Username" ref={username} />
+            <input type="password" className="input bg-transparent" placeholder="Password" ref={password} />
+            <button className="btn btn-primary bg-transparent">LogIn</button>
         </form>
     </>
 }

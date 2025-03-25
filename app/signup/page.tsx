@@ -36,9 +36,9 @@ export default function Signup() {
         }}>
             <h1 className="text-[2rem] font-bold">SignUp</h1>
             {error ? <Error error={error} className="text-[1.5rem]" /> : null}
-            <input type="text" className="input text-black" placeholder="Username" ref={username} />
-            <input type="password" className="input text-black" placeholder="Password" ref={password} />
-            <input type="file" className="input text-black" placeholder="Profile Picture" ref={file} />
+            <input type="text" className="input bg-transparent" placeholder="Username" ref={username} />
+            <input type="password" className="input bg-transparent" placeholder="Password" ref={password} />
+            <input type="file" className="input bg-transparent" placeholder="Profile Picture" ref={file} />
             <button className="btn btn-primary btn-outline">SignUp</button>
         </form>
     </>}

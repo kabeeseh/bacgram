@@ -18,6 +18,8 @@ model User{
   password String
   posts Post[] @relation(name: "posts")
   profileUrl String
+  followers User[] @relation(name: "followers")
+  following User[] @relation(name: "followers")
   createdAt DateTime @default(now())
 }
 model Post {
@@ -26,5 +28,6 @@ model Post {
   authorId Int
   title String
   content String
+  imageUrl String?
   createdAt DateTime @default(now())
 }

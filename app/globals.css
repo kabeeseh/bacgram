@@ -36,7 +36,7 @@ body, .standardBtn {
 }
 
 .standardBtn {
-  @apply btn btn-primary btn-outline px-[3vw] text-[1.2rem] bg-gray-800 text-white; /* Add dark background and white text */
+  @apply btn btn-primary btn-outline px-[3vw] text-[1.2rem] text-white; /* Add dark background and white text */
 }
 
 /* Handle dark mode for the body and elements */
