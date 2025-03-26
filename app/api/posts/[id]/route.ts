@@ -1,7 +1,7 @@
 import { decode, verify } from "jsonwebtoken"
 import { prisma } from "../../init"
 
-export async function GET(req: Request, context: { params: { id: String }}) {
+export async function GET(req: Request, { context }: { context: { params: { id: String }}}) {
     try {
         
         const authHeader = req.headers.get("Authorization")?.split(' ')[1]
