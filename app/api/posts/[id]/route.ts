@@ -1,29 +1,33 @@
-import { decode, verify } from "jsonwebtoken"
-import { prisma } from "../../init"
+import { verify } from "jsonwebtoken";
+import { prisma } from "../../init";
 
-export async function GET(req: Request, { params }: {params: { id: number }}) {
+export async function GET(req: Request, { params }: { params: { id: number } }) {
     try {
+        const authHeader = req.headers.get("Authorization")?.split(' ')[1];
         
-        const authHeader = req.headers.get("Authorization")?.split(' ')[1]
-        
-    if (!authHeader || !verify(authHeader, process.env.SECRET as string)) return new Response("Unauthorized")
-    const { id } = await params
-
-    const post = await prisma.post.findUnique({
-        where: {
-            id
-        },
-        include: {
-            author: true
+        if (!authHeader || !verify(authHeader, process.env.SECRET as string)) {
+            return new Response("Unauthorized", { status: 401 });
         }
-    })
 
-    if (!post) return new Response("Post not found", { status: 404 })
+        const { id } = params;
 
-        
-        
-        return Response.json(post)
+        const post = await prisma.post.findUnique({
+            where: {
+                id
+            },
+            include: {
+                author: true
+            }
+        });
+
+        if (!post) {
+            return new Response("Post not found", { status: 404 });
+        }
+
+        return new Response(JSON.stringify(post), {
+            headers: { "Content-Type": "application/json" }
+        });
     } catch (error: any) {
-        return new Response(error, { status: 500 })   
+        return new Response(error.message, { status: 500 });
     }
 }
