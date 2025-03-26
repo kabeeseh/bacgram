@@ -34,7 +34,7 @@ export default function LogIn() {
             {error ? <Error error={error} className="text-[1.5rem]" /> : null}
             <input type="text" className="input bg-transparent" placeholder="Username" ref={username} />
             <input type="password" className="input bg-transparent" placeholder="Password" ref={password} />
-            <button className="btn btn-primary bg-transparent">LogIn</button>
+            <button className="btn btn-primary btn-outline">LogIn</button>
         </form>
     </>
 }

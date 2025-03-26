@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { Error } from "../Error"
 import { Loading } from "../loadingComp"
 import Nav from "../Nav"
+import Link from "next/link"
 
 export default function Home() {
     const [posts, setPosts] = useState<any[]>([])
@@ -32,7 +33,7 @@ export default function Home() {
         <div className="flex flex-col items-center pt-[10vh] bg-[#0a0a0a]">
         {error ? <Error error={error} className="text-center text-[2rem] flex items-center justify-center h-screen" /> : null}
         <div className="gap-[2vh] flex items-center flex-col">
-        {posts.map((post) => <div key={post.id} className="border border-solid w-fit h-fit p-[5vw] flex flex-col gap-[2vh]">
+        {posts.map((post) => <Link href={`post/${post.id}`} key={post.id} className="border border-solid w-fit h-fit p-[5vw] flex flex-col gap-[2vh]">
             <div className="flex items-center justify-center gap-2 @container">
             <div className="avatar">
                 <div className="rounded-full sm:w-[8vw] lg:w-[4vw] md:w-[7vw]">
@@ -44,7 +45,7 @@ export default function Home() {
             <h1 className="text-[1.5rem]">Title: {post.title}</h1>
             <p className="text-[1.2rem]">Content: {post.content}</p>
             {post.imageUrl ? <img src={post.imageUrl} /> : null}
-        </div>)}
+        </Link>)}
         </div>
         </div>
     }
