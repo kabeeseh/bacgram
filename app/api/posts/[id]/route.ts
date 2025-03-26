@@ -1,17 +1,17 @@
 import { decode, verify } from "jsonwebtoken"
 import { prisma } from "../../init"
 
-export async function GET(req: Request, { context }: { context: { params: { id: String }}}) {
+export async function GET(req: Request, { context }: { context: { params: { id: number }}}) {
     try {
         
         const authHeader = req.headers.get("Authorization")?.split(' ')[1]
         
     if (!authHeader || !verify(authHeader, process.env.SECRET as string)) return new Response("Unauthorized")
-    const id: any = await context.params.id
+    const { id } = await context.params
 
     const post = await prisma.post.findUnique({
         where: {
-            id: Number(id)
+            id
         },
         include: {
             author: true
