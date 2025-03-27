@@ -1,14 +1,16 @@
-import { verify } from "jsonwebtoken"
+import { verify } from "jsonwebtoken";
 
-export async function GET(req: Request, { params }: { params: Promise<any>}) {
+export async function GET(req: Request, { params }: { params: { id: string } }) {
     try {
-        const authHeader = req.headers.get("Authorization")?.split(' ')[1]
+        const authHeader = req.headers.get("Authorization")?.split(' ')[1];
 
-        if (!authHeader || !verify(authHeader, process.env.SECRET as string)) return new Response("Unauthorized", { status: 401 })
+        if (!authHeader || !verify(authHeader, process.env.SECRET as string)) {
+            return new Response("Unauthorized", { status: 401 });
+        }
 
-        const { id } = await params
-        return new Response(id as any)
+        const { id } = params;
+        return new Response(id);
     } catch (error: any) {
-        return new Response(error, { status: 500 })
+        return new Response("Internal Server Error", { status: 500 });
     }
 }
