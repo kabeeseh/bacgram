@@ -1,15 +1,15 @@
 import { verify } from "jsonwebtoken";
 import { prisma } from "../../init";
 
-export async function GET(req: Request, { params }: { params: Promise<{id: number}> }) {
-    try {
+export async function GET(req: Request, { context }: { context: { params: Promise<{id: number}> }}) {
+    try {{}
         const authHeader = req.headers.get("Authorization")?.split(' ')[1];
         
         if (!authHeader || !verify(authHeader, process.env.SECRET as string)) {
             return new Response("Unauthorized", { status: 401 });
         }
 
-        const { id } = await params;
+        const { id } = await context.params;
 
         const post = await prisma.post.findUnique({
             where: {
