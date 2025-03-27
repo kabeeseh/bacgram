@@ -1,6 +1,6 @@
 import { verify } from "jsonwebtoken"
 
-export async function GET(req: Request, { params }: { params: Promise<{id: Number}>}) {
+export async function GET(req: Request, { params }: { params: Promise<any>}) {
     try {
         const authHeader = req.headers.get("Authorization")?.split(' ')[1]
 
