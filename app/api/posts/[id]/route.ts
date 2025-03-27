@@ -9,11 +9,11 @@ export async function GET(req: Request, { params }: { params: { id: number } }) 
             return new Response("Unauthorized", { status: 401 });
         }
 
-        const { id } = params;
+        const { id } = await params;
 
         const post = await prisma.post.findUnique({
             where: {
-                id
+                id: Number(id)
             },
             include: {
                 author: true
@@ -28,6 +28,6 @@ export async function GET(req: Request, { params }: { params: { id: number } }) 
             headers: { "Content-Type": "application/json" }
         });
     } catch (error: any) {
-        return new Response(error.message, { status: 500 });
+        return new Response(error, { status: 500 });
     }
 }
