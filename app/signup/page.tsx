@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import LoadingComp from "../LoadingComp";
 import { Error } from "../Error";
 
-export default function Login() {
+export default function SignUp() {
   const username = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -27,7 +27,7 @@ export default function Login() {
           setLoading(true);
           setError("");
           await axios
-            .post("http://localhost:3000/api/login", {
+            .post("http://localhost:3000/api/signup", {
               username: username.current?.value,
               password: password.current?.value,
             })
@@ -44,7 +44,7 @@ export default function Login() {
             .finally(() => setLoading(false));
         }}
       >
-        <h1 className="text-[1.5rem] font-bold">LogIn</h1>
+        <h1 className="text-[1.5rem] font-bold">SignUp</h1>
         {error && <Error className={""}>{error}</Error>}
         <Input
           type="text"
@@ -62,7 +62,7 @@ export default function Login() {
           whileHover={btnProps.whileHover}
           whileTap={btnProps.whileTap}
         >
-          <Button>LogIn</Button>
+          <Button>SignUp</Button>
         </motion.div>
       </form>
     </>
