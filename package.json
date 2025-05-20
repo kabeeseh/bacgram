@@ -30,6 +30,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-infinite-scroller": "^1.2.5",
+    "react-infinite-scroller": "^1.2.6",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.0",
     "typescript": "^5"
