@@ -1,7 +1,7 @@
 import { decode, verify } from "jsonwebtoken"
 import { prisma } from "@/app/api/prisma"
 
-export async function GET(req: Request, { params }: { params: { page: number } }) {
+export async function GET(req: Request, { params }: { params: { page: string } }) {
     try {
 
         const authHeader = req.headers.get("Authorization")?.split(' ')[1]
@@ -9,7 +9,7 @@ export async function GET(req: Request, { params }: { params: { page: number } }
         if (!authHeader || !verify(authHeader, process.env.SECRET as string)) return new Response("Unauthorized", { status: 401 })
 
         const decoded: any = await decode(authHeader)
-        const page = params.page ? params.page : 1
+        const page = params.page ? parseInt(params.page) : 1
         const skip = (page - 1) * 5;
         const posts = await prisma.post.findMany({
             where: {
