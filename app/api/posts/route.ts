@@ -52,7 +52,7 @@ export async function GET(req: Request) {
 }
 export async function POST(req: Request) {
     try {
-        const authHeader = req.headers.get("Authorization")
+        const authHeader = req.headers.get("Authorization")?.split(' ')[1]
 
         if (!authHeader || !verify(authHeader, process.env.SECRET as string)) return new Response('Unauthorized', { status: 401 })
 
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
         const decoded: any = await decode(authHeader)
         const post = await prisma.post.create({
             data: {
-                title,
+                title: title ? title : "",
                 content,
                 authorId: decoded.id
             }
