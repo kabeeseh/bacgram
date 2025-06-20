@@ -1,15 +1,16 @@
 import { verify } from "jsonwebtoken";
 import { prisma } from "../../prisma";
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
         const authHeader = req.headers.get('Authorization')?.split(' ')[1];
 
         if (!authHeader || !verify(authHeader, process.env.SECRET as string)) return new Response('Unauthorized', { status: 401 });
 
+        const { id } = await params;
         const user = await prisma.user.findFirst({
             where: {
-                id: parseInt(params.id)
+                id: parseInt(id)
             },
             include: {
                 posts: true,
