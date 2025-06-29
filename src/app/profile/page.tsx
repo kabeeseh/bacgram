@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { motion } from "motion/react";
 import { Post } from "../types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "../custom/Loading";
@@ -15,7 +16,7 @@ import { getCookie } from "cookies-next";
 import Error from "../Error";
 import Nav from "../Nav";
 import { useUser } from "../context/userContext";
-export default function Home() {
+export default function Profile() {
   const [error, setError] = useState("");
   const [posts, setPosts] = useState<Post[]>([]);
   const [hasMore, setHasMore] = useState(true);
@@ -55,17 +56,24 @@ export default function Home() {
         className="flex flex-col items-center gap-[5vh] mt-[5vh]"
       >
         {posts.map((post) => (
-          <Card className="w-full max-w-sm" key={post.id as number}>
-            <CardHeader>
-              <CardDescription>
-                Username: {post.author.username}
-              </CardDescription>
-              <CardTitle>{post.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>{post.content}</p>
-            </CardContent>
-          </Card>
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="w-full max-w-sm"
+          >
+            <Card className="w-full" key={post.id as number}>
+              <CardHeader>
+                <CardDescription>
+                  Username: {post.author.username}
+                </CardDescription>
+                <CardTitle>{post.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>{post.content}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
         ))}
         {posts.length == 0 && <Error error={error} />}
       </InfiniteScroll>

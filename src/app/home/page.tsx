@@ -1,4 +1,5 @@
 "use client";
+import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import {
   Card,
@@ -14,12 +15,10 @@ import axios from "axios";
 import { getCookie } from "cookies-next";
 import Error from "../Error";
 import Nav from "../Nav";
-import { useUser } from "../context/userContext";
 export default function Home() {
   const [error, setError] = useState("");
   const [posts, setPosts] = useState<Post[]>([]);
   const [hasMore, setHasMore] = useState(true);
-  const { user } = useUser();
   const fetchPosts = async () => {
     await axios
       .get("/api/posts/", {
@@ -53,17 +52,24 @@ export default function Home() {
       >
         {<Error error={error} />}
         {posts.map((post) => (
-          <Card className="w-full max-w-sm">
-            <CardHeader>
-              <CardDescription>
-                Username: {post.author.username}
-              </CardDescription>
-              <CardTitle>{post.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>{post.content}</p>
-            </CardContent>
-          </Card>
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="max-w-sm"
+          >
+            <Card className="w-full max-w-sm">
+              <CardHeader>
+                <CardDescription>
+                  Username: {post.author.username}
+                </CardDescription>
+                <CardTitle>{post.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>{post.content}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
         ))}
       </InfiniteScroll>
     </>
