@@ -1,5 +1,11 @@
 "use client";
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { User } from "../types";
 
 type UserContextType = {
@@ -9,7 +15,16 @@ type UserContextType = {
 
 const userContext = createContext<UserContextType | null>(null);
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUserState] = useState<User | null>(null);
+  const setUser = (newUser: User | null) => {
+    setUserState(newUser);
+    localStorage.setItem("user", JSON.stringify(newUser));
+  };
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      setUser(JSON.parse(localStorage.getItem("user") as string));
+    }
+  }, []);
   return (
     <userContext.Provider value={{ user, setUser }}>
       {children}
