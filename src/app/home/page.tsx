@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Post } from "../types";
-import InfiniteScroll from "react-infinite-scroller";
+import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "../custom/Loading";
 import axios from "axios";
 import { getCookie } from "cookies-next";
@@ -38,10 +38,11 @@ export default function Home() {
     <>
       <Nav />
       <InfiniteScroll
-        loadMore={fetchPosts}
+        next={fetchPosts}
         hasMore={hasMore}
         loader={<Loading className="mt-[0vh]" key={1} />}
         className="flex flex-col items-center gap-[5vh] mt-[20vh]"
+        dataLength={posts.length}
       >
         {<Error error={error} />}
         {posts.map((post) => (
