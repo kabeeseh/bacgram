@@ -20,7 +20,7 @@ export default function LogIn() {
     <div className="flex items-center justify-center h-[90vh] flex-col gap-[7vh]">
       <h1 className="text-[2.5rem] text-center">LogIn</h1>
       <form
-        className="flex items-center justify-center flex-col gap-[3vh]"
+        className="flex items-center justify-center flex-col gap-[3vh] w-full max-w-sm"
         onSubmit={(e) => {
           e.preventDefault();
           setError("");
