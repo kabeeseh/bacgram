@@ -10,6 +10,7 @@ import Nav from "../Nav";
 export default function Add() {
   const title = useRef<HTMLInputElement>(null);
   const content = useRef<HTMLInputElement>(null);
+  const image = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   return loading ? (
     <Loading className="mt-[40vh]" />
@@ -22,19 +23,18 @@ export default function Add() {
           onSubmit={(e) => {
             e.preventDefault();
             setLoading(true);
+            const formData = new FormData();
+            formData.append("title", title.current?.value as string);
+            formData.append("content", content.current?.value as string);
+            if (image.current?.files?.[0]) {
+              formData.append("image", image.current.files[0]);
+            }
             axios
-              .post(
-                "/api/posts",
-                {
-                  title: title.current?.value,
-                  content: content.current?.value,
+              .post("/api/posts", formData, {
+                headers: {
+                  Authorization: `Bearer ${getCookie("token")}`,
                 },
-                {
-                  headers: {
-                    Authorization: `Bearer ${getCookie("token")}`,
-                  },
-                }
-              )
+              })
               .then((res) => {
                 alert("Added");
               })
@@ -43,7 +43,8 @@ export default function Add() {
         >
           <Input type="text" placeholder="Title" ref={title} />
           <Input type="text" placeholder="Content" ref={content} />
-          <Button>Add</Button>
+          <Input type="file" placeholder="Image" ref={image} accept="image/*" />
+          <Button type="submit">Add</Button>
         </form>
       </div>
     </>

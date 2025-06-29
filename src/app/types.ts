@@ -13,6 +13,7 @@ export interface Post {
   title: String;
   content: String;
   viewedUsers: User[];
+  imageUrl?: string | null;
   createdAt: Date;
 }
 export type btnVariant =

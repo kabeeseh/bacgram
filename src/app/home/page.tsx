@@ -15,6 +15,7 @@ import axios from "axios";
 import { getCookie } from "cookies-next";
 import Error from "../Error";
 import Nav from "../Nav";
+import Image from "next/image";
 export default function Home() {
   const [error, setError] = useState("");
   const [posts, setPosts] = useState<Post[]>([]);
@@ -57,6 +58,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
             className="max-w-sm"
+            key={post.id as number}
           >
             <Card className="w-full max-w-sm">
               <CardHeader>
@@ -67,6 +69,9 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <p>{post.content}</p>
+                {post.imageUrl != "" && (
+                  <Image src={post.imageUrl as string} alt="Post Image" />
+                )}
               </CardContent>
             </Card>
           </motion.div>

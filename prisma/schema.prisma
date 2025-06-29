@@ -29,6 +29,7 @@ model Post {
   author      User     @relation(fields: [authorId], references: [id])
   title       String
   content     String
+  imageUrl    String?
   viewedUsers User[]   @relation("viewedUsers")
   createdAt   DateTime @default(now())
 }

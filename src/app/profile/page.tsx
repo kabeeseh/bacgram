@@ -16,6 +16,7 @@ import { getCookie } from "cookies-next";
 import Error from "../Error";
 import Nav from "../Nav";
 import { useUser } from "../context/userContext";
+import Image from "next/image";
 export default function Profile() {
   const [error, setError] = useState("");
   const [posts, setPosts] = useState<Post[]>([]);
@@ -61,8 +62,9 @@ export default function Profile() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
             className="w-full max-w-sm"
+            key={post.id as number}
           >
-            <Card className="w-full" key={post.id as number}>
+            <Card className="w-full">
               <CardHeader>
                 <CardDescription>
                   Username: {post.author.username}
@@ -71,6 +73,13 @@ export default function Profile() {
               </CardHeader>
               <CardContent>
                 <p>{post.content}</p>
+                {post.imageUrl != "" && (
+                  <img
+                    src={post.imageUrl as string}
+                    alt="Post Image"
+                    width={1000}
+                  />
+                )}
               </CardContent>
             </Card>
           </motion.div>
