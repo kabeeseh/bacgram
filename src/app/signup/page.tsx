@@ -13,6 +13,7 @@ import { useUser } from "../context/userContext";
 export default function SignUp() {
   const username = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
+  const profilePicture = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -33,11 +34,15 @@ export default function SignUp() {
           e.preventDefault();
           setError("");
           setLoading(true);
+          const formData = new FormData();
+          formData.append("username", username.current?.value as string);
+          formData.append("password", password.current?.value as string);
+          formData.append(
+            "profile",
+            profilePicture.current?.files?.[0] as File
+          );
           axios
-            .post("/api/signup", {
-              username: username.current?.value,
-              password: password.current?.value,
-            })
+            .post("/api/signup", formData)
             .then((res) => {
               setCookie("token", res.data.token);
               router.push("/home");
@@ -52,6 +57,12 @@ export default function SignUp() {
         {error && <Error error={error} />}
         <Input placeholder="Username" type="text" ref={username} />
         <Input placeholder="Password" type="password" ref={password} />
+        <Input
+          placeholder="Profile Picture"
+          type="file"
+          accept="image/*"
+          ref={profilePicture}
+        />
         <ButtonCustom>SignUp</ButtonCustom>
       </form>
     </motion.div>

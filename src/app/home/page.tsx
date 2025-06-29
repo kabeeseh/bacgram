@@ -70,7 +70,11 @@ export default function Home() {
               <CardContent>
                 <p>{post.content}</p>
                 {post.imageUrl != "" && (
-                  <Image src={post.imageUrl as string} alt="Post Image" />
+                  <img
+                    src={post.imageUrl as string}
+                    alt="Post Image"
+                    width={1000}
+                  />
                 )}
               </CardContent>
             </Card>

@@ -46,15 +46,21 @@ export default function Profile() {
   return (
     <>
       <Nav />
-      <h1 className="text-[1.5rem] text-center mt-[20vh] font-semibold capitalize">
-        Hello {user?.username}!
-      </h1>
+      <div className="flex items-center justify-center mt-[10vh] gap-[1vw]">
+        <img
+          src={user?.profileUrl as string}
+          className="rounded-full w-[3vw] h-[3vw]"
+        />
+        <h1 className="text-[1.5rem] text-center font-semibold capitalize">
+          {user?.username}
+        </h1>
+      </div>
       <InfiniteScroll
         next={fetchPosts}
         dataLength={posts.length}
         hasMore={hasMore}
         loader={<Loading className="mt-[0vh]" key={1} />}
-        className="flex flex-col items-center gap-[5vh] mt-[5vh]"
+        className="flex flex-col items-center gap-[5vh] mt-[15vh]"
       >
         {posts.map((post) => (
           <motion.div

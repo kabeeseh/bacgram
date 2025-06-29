@@ -19,6 +19,7 @@ model User {
   username    String   @unique
   password    String
   post        Post[]
+  profileUrl  String
   viewedPosts Post[]   @relation("viewedUsers")
   createdAt   DateTime @default(now())
 }

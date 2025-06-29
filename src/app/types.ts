@@ -3,6 +3,7 @@ export interface User {
   username: String;
   password: String;
   post: Post[];
+  profileUrl: String;
   viewedPosts: Post[];
   createdAt: Date;
 }
