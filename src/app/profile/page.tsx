@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -14,11 +14,13 @@ import axios from "axios";
 import { getCookie } from "cookies-next";
 import Error from "../Error";
 import Nav from "../Nav";
+import { useUser } from "../context/userContext";
 export default function Home() {
   const [error, setError] = useState("");
   const [posts, setPosts] = useState<Post[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+  const { user } = useUser();
   const fetchPosts = async () => {
     await axios
       .get(`/api/posts/user?page=${page}`, {
@@ -36,15 +38,21 @@ export default function Home() {
         setHasMore(false);
       });
   };
+  useEffect(() => {
+    fetchPosts();
+  }, []);
   return (
     <>
       <Nav />
+      <h1 className="text-[1.5rem] text-center mt-[20vh] font-semibold capitalize">
+        Hello {user?.username}!
+      </h1>
       <InfiniteScroll
         next={fetchPosts}
         dataLength={posts.length}
         hasMore={hasMore}
         loader={<Loading className="mt-[0vh]" key={1} />}
-        className="flex flex-col items-center gap-[5vh] mt-[20vh]"
+        className="flex flex-col items-center gap-[5vh] mt-[5vh]"
       >
         {posts.map((post) => (
           <Card className="w-full max-w-sm" key={post.id as number}>

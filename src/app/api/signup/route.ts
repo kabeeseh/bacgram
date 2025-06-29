@@ -31,7 +31,7 @@ export async function POST(req: Request) {
       { id: user.id, username },
       process.env.SECRET as string
     );
-    return Response.json({ token });
+    return Response.json({ token, user });
   } catch (error: any) {
     return new Response(error.message, { status: 500 });
   }

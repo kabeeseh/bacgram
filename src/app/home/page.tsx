@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -14,10 +14,12 @@ import axios from "axios";
 import { getCookie } from "cookies-next";
 import Error from "../Error";
 import Nav from "../Nav";
+import { useUser } from "../context/userContext";
 export default function Home() {
   const [error, setError] = useState("");
   const [posts, setPosts] = useState<Post[]>([]);
   const [hasMore, setHasMore] = useState(true);
+  const { user } = useUser();
   const fetchPosts = async () => {
     await axios
       .get("/api/posts/", {
@@ -27,13 +29,18 @@ export default function Home() {
       })
       .then((res) => {
         setPosts((posts) => [...posts, ...res.data]);
-        setHasMore(false);
+        setHasMore(posts.length == 0);
+        console.log(res);
       })
       .catch((err) => {
         setError(err.response.data);
         setHasMore(false);
+        console.log(err);
       });
   };
+  useEffect(() => {
+    fetchPosts();
+  }, []);
   return (
     <>
       <Nav />

@@ -8,8 +8,10 @@ import Error from "../Error";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
+import { useUser } from "../context/userContext";
 
 export default function LogIn() {
+  const { setUser } = useUser();
   const username = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
@@ -39,6 +41,7 @@ export default function LogIn() {
             .then((res) => {
               setCookie("token", res.data.token);
               router.push("/home");
+              setUser(res.data.user);
             })
             .catch((err: any) => {
               setError(err.response.data);
