@@ -6,16 +6,15 @@ export async function GET(req: Request) {
   try {
     const authHeader = req.headers.get("Authorization")?.split(" ")[1];
 
-    console.log(authHeader);
-
     if (!authHeader || !verify(authHeader, process.env.SECRET as string)) {
       return new Response("Unauthorized", { status: 401 });
     }
 
-    const decoded: any = (await decode(authHeader)) as {
+    const decoded: any = decode(authHeader) as {
       username: string;
       id: number;
     };
+
     const posts = await prisma.post.findMany({
       where: {
         authorId: {
@@ -56,8 +55,6 @@ export async function GET(req: Request) {
 
     return Response.json(posts);
   } catch (error: any) {
-    console.log(error);
-
     return new Response(error.message, { status: 500 });
   }
 }
@@ -87,8 +84,6 @@ export async function POST(req: Request) {
 
     return Response.json(post, { status: 201 });
   } catch (error: any) {
-    console.log(error);
-
     return new Response(error.message, { status: 500 });
   }
 }

@@ -5,8 +5,6 @@ export async function GET(req: Request) {
   try {
     const authHeader = req.headers.get("Authorization")?.split(" ")[1];
 
-    console.log(authHeader);
-
     if (!authHeader || !verify(authHeader, process.env.SECRET as string)) {
       return new Response("Unauthorized", { status: 401 });
     }
@@ -38,8 +36,6 @@ export async function GET(req: Request) {
 
     return Response.json(posts);
   } catch (error: any) {
-    console.log(error);
-
     return new Response(error.message, { status: 500 });
   }
 }
