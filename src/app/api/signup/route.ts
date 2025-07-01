@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       return new Response("Username already exists", { status: 400 });
     }
 
-    const storageRef = ref(storage, `profilePictures/${username}`);
+    const storageRef = ref(storage, `${process.env.profilePicDir}/${username}`);
     const snapshot = await uploadBytes(storageRef, profilePicture);
     const profileUrl = await getDownloadURL(snapshot.ref);
     const user = await prisma.user.create({

@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { motion } from "motion/react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useRef, useState } from "react";
@@ -17,7 +18,11 @@ export default function Add() {
   ) : (
     <>
       <Nav />
-      <div className="flex justify-center w-screen">
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex justify-center w-screen"
+      >
         <form
           className="flex items-center justify-center h-screen flex-col w-full max-w-sm gap-[2vh]"
           onSubmit={(e) => {
@@ -46,7 +51,7 @@ export default function Add() {
           <Input type="file" placeholder="Image" ref={image} accept="image/*" />
           <Button type="submit">Add</Button>
         </form>
-      </div>
+      </motion.div>
     </>
   );
 }

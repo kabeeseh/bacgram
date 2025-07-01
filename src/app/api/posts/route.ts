@@ -79,7 +79,10 @@ export async function POST(req: Request) {
 
     const decoded: any = await decode(authHeader);
 
-    const fileRef = ref(storage, `images/${image?.name}-${Date.now()}`);
+    const fileRef = ref(
+      storage,
+      `${process.env.imagesDir}/${image?.name}-${Date.now()}`
+    );
     const snapshot = await uploadBytes(fileRef, image as Blob);
     const downloadUrl = await getDownloadURL(snapshot.ref);
     const post = await prisma.post.create({
