@@ -49,7 +49,7 @@ export default function Profile() {
       <div className="flex items-center justify-center mt-[10vh] gap-[1vw]">
         <img
           src={user?.profileUrl as string}
-          className="rounded-full w-[3vw] h-[3vw]"
+          className="rounded-full md:w-[3vw] md:h-[3vw] h-[8vw] w-[8vw]"
         />
         <h1 className="text-[1.5rem] text-center font-semibold capitalize">
           {user?.username}

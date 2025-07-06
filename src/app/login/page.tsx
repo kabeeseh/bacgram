@@ -49,8 +49,8 @@ export default function LogIn() {
               })
               .catch((err: any) => {
                 setError(err.response.data);
-              })
-              .finally(() => setLoading(false));
+                setLoading(false);
+              });
           }}
         >
           {error && <Error error={error} />}
