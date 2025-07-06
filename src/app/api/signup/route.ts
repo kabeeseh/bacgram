@@ -42,6 +42,8 @@ export async function POST(req: Request) {
     );
     return Response.json({ token, user });
   } catch (error: any) {
+    console.log(error);
+
     return new Response(error.message, { status: 500 });
   }
 }

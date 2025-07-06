@@ -24,36 +24,53 @@ export default function LogIn() {
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.1 }}
-      className="flex items-center justify-center h-[90vh] flex-col gap-[7vh]"
+      className="flex items-center justify-center md:justify-between h-[90vh] gap-[7vw] px-[3vw]"
     >
-      <h1 className="text-[2.5rem] text-center">LogIn</h1>
-      <form
-        className="flex items-center justify-center flex-col gap-[3vh] w-full max-w-sm"
-        onSubmit={(e) => {
-          e.preventDefault();
-          setError("");
-          setLoading(true);
-          axios
-            .post("/api/login", {
-              username: username.current?.value,
-              password: password.current?.value,
-            })
-            .then((res) => {
-              setCookie("token", res.data.token);
-              router.push("/home");
-              setUser(res.data.user);
-            })
-            .catch((err: any) => {
-              setError(err.response.data);
-            })
-            .finally(() => setLoading(false));
-        }}
-      >
-        {error && <Error error={error} />}
-        <Input placeholder="Username" type="text" ref={username} />
-        <Input placeholder="Password" type="password" ref={password} />
-        <ButtonCustom>LogIn</ButtonCustom>
-      </form>
+      <div className="hidden md:flex">
+        <h1 className="text-[5.5rem] font-bold">Welcome Back!</h1>
+      </div>
+      <div className="mr-[3vw] flex flex-col gap-[3vh]">
+        <h1 className="text-[2.5rem] text-center font-bold">LogIn</h1>
+        <form
+          className="flex items-center justify-center flex-col gap-[3vh] w-full max-w-sm"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setError("");
+            setLoading(true);
+            axios
+              .post("/api/login", {
+                username: username.current?.value,
+                password: password.current?.value,
+              })
+              .then((res) => {
+                setCookie("token", res.data.token);
+                router.push("/home");
+                setUser(res.data.user);
+              })
+              .catch((err: any) => {
+                setError(err.response.data);
+              })
+              .finally(() => setLoading(false));
+          }}
+        >
+          {error && <Error error={error} />}
+          <input
+            placeholder="Username"
+            type="text"
+            ref={username}
+            className="px-[5vw] border py-[1vh] rounded-xl text-center"
+          />
+          <input
+            placeholder="Password"
+            type="password"
+            ref={password}
+            className="px-[5vw] border py-[1vh] rounded-xl text-center"
+          />
+          <button className="border px-[4vw] py-[1vh] bg-[#4F2DFA] border-[#4F2DFA] rounded text-[1.5rem] font-bold hover:bg-transparent transition-all duration-200">
+            LogIn
+          </button>
+        </form>
+      </div>
     </motion.div>
   );
 }

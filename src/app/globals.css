@@ -17,3 +17,8 @@ body {
 .important {
   @apply text-[#4F2DFA] font-bold
 }
+
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-md: 818px;
+}

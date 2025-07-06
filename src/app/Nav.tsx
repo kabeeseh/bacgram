@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function Nav() {
   const router = useRouter();
   return (
-    <nav className="flex px-[2vw] justify-between">
+    <nav className="flex px-[2vw] justify-between ">
       <h1 className="justify-start font-bold text-[1.5rem]">Bacgram</h1>
       <Link href={"/home"}>
         <ButtonCustom variant={"ghost"}>Home</ButtonCustom>
