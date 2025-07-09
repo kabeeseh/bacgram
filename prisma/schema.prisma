@@ -21,6 +21,7 @@ model User {
   post        Post[]
   profileUrl  String
   viewedPosts Post[]   @relation("viewedUsers")
+  likedPosts Post[] @relation("likedPosts")
   createdAt   DateTime @default(now())
 }
 
@@ -31,6 +32,8 @@ model Post {
   title       String
   content     String
   imageUrl    String?
+  likes Int @default(0)
+  likedUsers User[]   @relation("likedPosts")
   viewedUsers User[]   @relation("viewedUsers")
   createdAt   DateTime @default(now())
 }

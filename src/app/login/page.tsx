@@ -67,10 +67,12 @@ export default function LogIn() {
             ref={password}
             className="px-[5vw] border py-[1vh] rounded-xl text-center"
           />
-            <div className="relative inline-block group">
-            <Link href={"/signup"} className="">Already Have an Account? SignUp Here</Link>
+          <div className="relative inline-block group">
+            <Link href={"/signup"} className="">
+              Dont Have an Account? SignUp Here
+            </Link>
             <span className="w-0 h-0.5 absolute bottom-0 left-0 group-hover:w-full bg-[#d9d9d9] transition-all duration-200"></span>
-            </div>
+          </div>
           <button className="border px-[4vw] py-[1vh] bg-[#4F2DFA] border-[#4F2DFA] rounded text-[1.5rem] font-bold hover:bg-transparent transition-all duration-200">
             LogIn
           </button>

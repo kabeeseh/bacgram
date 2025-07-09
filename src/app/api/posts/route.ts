@@ -33,6 +33,7 @@ export async function GET(req: Request) {
       include: {
         viewedUsers: true,
         author: true,
+        likedUsers: true,
       },
     });
 

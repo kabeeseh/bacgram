@@ -3,6 +3,7 @@ export interface User {
   username: String;
   password: String;
   post: Post[];
+  likedPosts: Post[];
   profileUrl: String;
   viewedPosts: Post[];
   createdAt: Date;
@@ -13,6 +14,8 @@ export interface Post {
   author: User;
   title: String;
   content: String;
+  likedUsers: User[];
+  likes: Number;
   viewedUsers: User[];
   imageUrl?: string | null;
   createdAt: Date;

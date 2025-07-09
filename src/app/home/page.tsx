@@ -1,25 +1,19 @@
 "use client";
-import { motion } from "motion/react";
 import { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Post } from "../types";
+import Post from "../Post";
+import type { Post as TPost, User } from "../types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "../custom/Loading";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import Error from "../Error";
 import Nav from "../Nav";
-import Image from "next/image";
+import { useUser } from "../context/userContext";
 export default function Home() {
   const [error, setError] = useState("");
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<TPost[]>([]);
   const [hasMore, setHasMore] = useState(true);
+  const { user } = useUser();
   const fetchPosts = async () => {
     await axios
       .get("/api/posts/", {
@@ -53,32 +47,7 @@ export default function Home() {
       >
         {<Error error={error} />}
         {posts.map((post) => (
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="max-w-sm"
-            key={post.id as number}
-          >
-            <Card className="w-full max-w-sm">
-              <CardHeader>
-                <CardDescription>
-                  Username: {post.author.username}
-                </CardDescription>
-                <CardTitle>{post.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>{post.content}</p>
-                {post.imageUrl != "" && (
-                  <img
-                    src={post.imageUrl as string}
-                    alt="Post Image"
-                    width={1000}
-                  />
-                )}
-              </CardContent>
-            </Card>
-          </motion.div>
+          <Post post={post} user={user as User} />
         ))}
       </InfiniteScroll>
     </>

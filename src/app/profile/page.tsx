@@ -1,14 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { motion } from "motion/react";
-import { Post } from "../types";
+import Post from "../Post";
+import type { Post as TPost, User } from "../types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "../custom/Loading";
 import axios from "axios";
@@ -19,7 +12,7 @@ import { useUser } from "../context/userContext";
 import Image from "next/image";
 export default function Profile() {
   const [error, setError] = useState("");
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<TPost[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const { user } = useUser();
@@ -34,6 +27,7 @@ export default function Profile() {
         setPosts((posts) => [...posts, ...res.data]);
         setHasMore(res.data.length > 0);
         setPage((page) => page + 1);
+        console.log(res.data);
       })
       .catch((err) => {
         setError(err.response.data);
@@ -63,32 +57,7 @@ export default function Profile() {
         className="flex flex-col items-center gap-[5vh] mt-[15vh]"
       >
         {posts.map((post) => (
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="w-full max-w-sm"
-            key={post.id as number}
-          >
-            <Card className="w-full">
-              <CardHeader>
-                <CardDescription>
-                  Username: {post.author.username}
-                </CardDescription>
-                <CardTitle>{post.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>{post.content}</p>
-                {post.imageUrl != "" && (
-                  <img
-                    src={post.imageUrl as string}
-                    alt="Post Image"
-                    width={1000}
-                  />
-                )}
-              </CardContent>
-            </Card>
-          </motion.div>
+          <Post key={post.id as number} post={post} user={user as User} />
         ))}
         {posts.length == 0 && <Error error={error} />}
       </InfiniteScroll>

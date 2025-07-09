@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "motion/react";
 import axios from "axios";
@@ -49,7 +48,12 @@ export default function Add() {
           <Input type="text" placeholder="Title" ref={title} />
           <Input type="text" placeholder="Content" ref={content} />
           <Input type="file" placeholder="Image" ref={image} accept="image/*" />
-          <Button type="submit">Add</Button>
+          <button
+            className="border px-[3vw] py-[.5vh] bg-[#4F2DFA] border-[#4F2DFA] rounded text-[1.5rem] font-bold hover:bg-transparent transition-all duration-200"
+            type="submit"
+          >
+            Add
+          </button>
         </form>
       </motion.div>
     </>
