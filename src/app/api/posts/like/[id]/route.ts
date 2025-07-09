@@ -3,7 +3,7 @@ import { decode, verify } from "jsonwebtoken";
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const authHeader = req.headers.get("Authorization")?.split(" ")[1];
@@ -16,7 +16,8 @@ export async function POST(
       authHeader
     )) as any;
     const userId = decoded.id;
-    const postId = parseInt(params.id);
+    const { id } = await params;
+    const postId = parseInt(id);
 
     const post = await prisma.post.findUnique({
       where: {
