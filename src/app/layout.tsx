@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Bacgram",
   description: "An app for BAC students to socialize",
+  verification: {
+    google: "eDHYXDDzOToCKgEMITwgssNkZTxNr4AG9X40918z9YQ",
+  },
 };
 
 export default function RootLayout({
