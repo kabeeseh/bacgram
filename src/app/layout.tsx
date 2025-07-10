@@ -34,7 +34,6 @@ export default function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3734297456127533"
           crossOrigin="anonymous"
         ></script>
-        <link rel="icon" href="/bacgram-logo.png" sizes="any" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
