@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import Post from "../Post";
 import type { Post as TPost, User } from "../types";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -16,9 +16,9 @@ export default function Profile() {
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const { user } = useUser();
-  const fetchPosts = async () => {
-    await axios
-      .get(`/api/posts/user?page=${page}`, {
+  const fetchPosts = (currentPage: number) => {
+    axios
+      .get(`/api/posts/user?page=${currentPage}`, {
         headers: {
           Authorization: `Bearer ${getCookie("token")}`,
         },
@@ -26,7 +26,7 @@ export default function Profile() {
       .then((res) => {
         setPosts((posts) => [...posts, ...res.data]);
         setHasMore(res.data.length > 0);
-        setPage((page) => page + 1);
+        setPage(currentPage + 1);
         console.log(res.data);
       })
       .catch((err) => {
@@ -35,7 +35,7 @@ export default function Profile() {
       });
   };
   useEffect(() => {
-    fetchPosts();
+    fetchPosts(1);
   }, []);
   return (
     <>
@@ -51,7 +51,7 @@ export default function Profile() {
           </h1>
         </div>
         <InfiniteScroll
-          next={fetchPosts}
+          next={() => fetchPosts(page)}
           dataLength={posts.length}
           hasMore={hasMore}
           loader={<Loading className="mt-[0vh]" key={1} />}

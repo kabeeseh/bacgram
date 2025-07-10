@@ -25,14 +25,19 @@ export default function Post({ post, user }: { post: Post; user: User }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
       className="max-w-sm"
-      key={post.id as number}
       onClick={() => {
         router.push(`/post/${post.id}`);
       }}
     >
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardDescription className="text-[1.2rem] flex items-center gap-[2vw] justify-center">
+          <CardDescription
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push(`/user/${post.author.id}`);
+            }}
+            className="text-[1.2rem] flex items-center gap-[2vw] justify-center"
+          >
             <img
               src={post.author.profileUrl as string}
               className="rounded-full w-[5vw] h-[5vw]"
@@ -45,7 +50,7 @@ export default function Post({ post, user }: { post: Post; user: User }) {
         <CardContent className="flex flex-col items-center gap-[2vh]">
           <p className="text-left">{post.content}</p>
           <p>Likes: {post.likes as number}</p>
-          {post.imageUrl != "" && (
+          {post.imageUrl != "" && post.imageUrl != null && (
             <img src={post.imageUrl as string} alt="Post Image" width={1000} />
           )}
           {liked ? (

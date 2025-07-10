@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
-import { useInView } from "react-intersection-observer";
+
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
-import { useEffect } from "react";
 
 function Nav() {
   return (
