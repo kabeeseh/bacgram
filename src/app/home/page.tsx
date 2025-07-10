@@ -25,6 +25,7 @@ export default function Home() {
         setPosts((posts) => [...posts, ...res.data]);
         setHasMore(posts.length == 0);
         console.log(res);
+        localStorage.setItem("posts", JSON.stringify(res.data));
       })
       .catch((err) => {
         setError(err.response.data);
@@ -33,6 +34,12 @@ export default function Home() {
       });
   };
   useEffect(() => {
+    if (localStorage.getItem("posts")) {
+      setPosts((prev) => [
+        ...prev,
+        ...JSON.parse(localStorage.getItem("posts") as string),
+      ]);
+    }
     fetchPosts();
   }, []);
   return (
@@ -42,13 +49,13 @@ export default function Home() {
         next={fetchPosts}
         hasMore={hasMore}
         loader={<Loading className="mt-[0vh]" key={1} />}
-        className="flex flex-col items-center gap-[5vh] mt-[20vh]"
+        className="flex flex-col items-center gap-[5vh] pt-[20vh]"
         dataLength={posts.length}
       >
-        {<Error error={error} />}
         {posts.map((post) => (
-          <Post post={post} user={user as User} />
+          <Post post={post} user={user as User} key={post.id as number} />
         ))}
+        {<Error error={error} />}
       </InfiniteScroll>
     </>
   );

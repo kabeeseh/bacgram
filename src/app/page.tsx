@@ -11,7 +11,7 @@ function Nav() {
       <Link href={"#home"} className="text-[1.66rem] font-bold">
         Bacgram
       </Link>
-      <div className="text-[1.6rem] flex items-center justify-center gap-[5vw]">
+      <div className=" flex items-center justify-center gap-[5vw]">
         <div className="relative inline-block group">
           <Link href={"#home"}>Home</Link>
           <span className="bg-[#d9d9d9] h-0.5 w-0 absolute left-0 bottom-0 group-hover:w-full transition-all duration-200 ease-in-out"></span>
@@ -94,7 +94,7 @@ function About() {
 }
 function Contact() {
   return (
-    <div className="mt-[10vh] mb-[10vh] p-[2vw]">
+    <div className="mt-[10vh] mb-[10vh] p-[2vw]" id="contact">
       <div className="flex items-center justify-center max-w-fit gap-[.5vw]">
         <svg
           xmlns="http://www.w3.org/2000/svg"

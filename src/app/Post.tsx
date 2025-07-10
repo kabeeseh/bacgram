@@ -10,8 +10,10 @@ import {
 } from "@/components/ui/card";
 import axios from "axios";
 import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 export default function Post({ post, user }: { post: Post; user: User }) {
   const [liked, setLiked] = useState(false);
+  const router = useRouter();
   useEffect(() => {
     if (post.likedUsers.some((u) => u.id === user.id)) {
       setLiked(true);
@@ -24,10 +26,20 @@ export default function Post({ post, user }: { post: Post; user: User }) {
       transition={{ duration: 0.4, ease: "easeInOut" }}
       className="max-w-sm"
       key={post.id as number}
+      onClick={() => {
+        router.push(`/post/${post.id}`);
+      }}
     >
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardDescription>Username: {post.author.username}</CardDescription>
+          <CardDescription className="text-[1.2rem] flex items-center gap-[2vw] justify-center">
+            <img
+              src={post.author.profileUrl as string}
+              className="rounded-full w-[5vw] h-[5vw]"
+              alt=""
+            />
+            {post.author.username}
+          </CardDescription>
           <CardTitle>{post.title}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col items-center gap-[2vh]">
@@ -38,7 +50,8 @@ export default function Post({ post, user }: { post: Post; user: User }) {
           )}
           {liked ? (
             <button
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setLiked(false);
                 post.likes = (post.likes as number) - 1;
                 axios.post(
@@ -57,7 +70,8 @@ export default function Post({ post, user }: { post: Post; user: User }) {
             </button>
           ) : (
             <button
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setLiked(true);
                 post.likes = (post.likes as number) + 1;
                 axios.post(

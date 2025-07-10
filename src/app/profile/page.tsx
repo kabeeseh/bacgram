@@ -40,27 +40,29 @@ export default function Profile() {
   return (
     <>
       <Nav />
-      <div className="flex items-center justify-center mt-[10vh] gap-[1vw]">
-        <img
-          src={user?.profileUrl as string}
-          className="rounded-full md:w-[3vw] md:h-[3vw] h-[8vw] w-[8vw]"
-        />
-        <h1 className="text-[1.5rem] text-center font-semibold capitalize">
-          {user?.username}
-        </h1>
+      <div className="mt-[20vh]">
+        <div className="flex items-center justify-center gap-[1vw]">
+          <img
+            src={user?.profileUrl as string}
+            className="rounded-full md:w-[3vw] md:h-[3vw] h-[8vw] w-[8vw]"
+          />
+          <h1 className="text-[1.5rem] text-center font-semibold capitalize">
+            {user?.username}
+          </h1>
+        </div>
+        <InfiniteScroll
+          next={fetchPosts}
+          dataLength={posts.length}
+          hasMore={hasMore}
+          loader={<Loading className="mt-[0vh]" key={1} />}
+          className="flex flex-col items-center gap-[5vh] mt-[15vh]"
+        >
+          {posts.map((post) => (
+            <Post key={post.id as number} post={post} user={user as User} />
+          ))}
+          {posts.length == 0 && <Error error={error} />}
+        </InfiniteScroll>
       </div>
-      <InfiniteScroll
-        next={fetchPosts}
-        dataLength={posts.length}
-        hasMore={hasMore}
-        loader={<Loading className="mt-[0vh]" key={1} />}
-        className="flex flex-col items-center gap-[5vh] mt-[15vh]"
-      >
-        {posts.map((post) => (
-          <Post key={post.id as number} post={post} user={user as User} />
-        ))}
-        {posts.length == 0 && <Error error={error} />}
-      </InfiniteScroll>
     </>
   );
 }
