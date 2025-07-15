@@ -34,9 +34,9 @@ export default function Add() {
               formData.append("image", image.current.files[0]);
             }
             axios
-              .post("/api/posts", formData, {
-                headers: {
-                  Authorization: `Bearer ${getCookie("token")}`,
+            .post("/api/posts", formData, {
+              headers: {
+                Authorization: `Bearer ${getCookie("token")}`,
                 },
               })
               .then((res) => {
@@ -44,7 +44,8 @@ export default function Add() {
               })
               .finally(() => setLoading(false));
           }}
-        >
+          >
+          <h1 className="text-[2.5rem] font-bold">Add</h1>
           <Input type="text" placeholder="Title" ref={title} />
           <Input type="text" placeholder="Content" ref={content} />
           <Input type="file" placeholder="Image" ref={image} accept="image/*" />
